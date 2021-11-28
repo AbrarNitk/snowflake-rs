@@ -1,3 +1,11 @@
 grep -o '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' output.txt
 sort ips.txt | uniq -c
 sort ips.txt | uniq | wc -l
+
+Assuming that your file is a text file, having the fields separated by comma separator ','.
+You would also know which field 'transactionid' is in terms of its position. Assuming that your 'transactionid' field is 7th field.
+awk -F ',' '{print $7}' text_file | sort | uniq -c
+
+seq 1 1000000000 | xargs -I -n1 -P50  curl "http://127.0.0.1:8080/v1" >> output.txt
+grep -o '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' output.txt >> ids.txt
+sort ids.txt | uniq | wc -l
