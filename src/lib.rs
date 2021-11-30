@@ -1,4 +1,3 @@
-
 const UNUSED_BITS: u16 = 1;
 const EPOCH_BITS: u64 = 41;
 const NODE_ID_BITS: u16 = 10;
@@ -9,19 +8,19 @@ const MAX_SEQUENCE: u64 = (2_i32.pow(SEQUENCE_BITS as u32) - 1) as u64;
 
 pub struct UniqueId {
     last_timestamp: u64,
-    sequence: u64
+    sequence: u64,
 }
 
 pub struct UniqueIdBuilder {
     node_id: u16,
-    unique_id: std::sync::Mutex<UniqueId>
+    unique_id: std::sync::Mutex<UniqueId>,
 }
 
 impl UniqueIdBuilder {
     pub fn new(node_id: u16) -> Self {
         Self {
             node_id,
-            unique_id: std::sync::Mutex::new(UniqueId::new())
+            unique_id: std::sync::Mutex::new(UniqueId::new()),
         }
     }
 }
@@ -30,7 +29,7 @@ impl UniqueId {
     fn new() -> Self {
         Self {
             last_timestamp: chrono::Utc::now().timestamp_millis() as u64,
-            sequence: 0
+            sequence: 0,
         }
     }
 }
@@ -42,7 +41,6 @@ impl Clone for UniqueIdGen {
         UniqueIdGen::new(self.0.node_id)
     }
 }
-
 
 impl UniqueIdGen {
     pub fn new(node_id: u16) -> Self {
@@ -66,9 +64,9 @@ impl UniqueIdGen {
                 unique_id.sequence = 0
             }
         }
-        unique_id.last_timestamp << (NODE_ID_BITS + SEQUENCE_BITS) |
-            (self.0.node_id as u64 )<< SEQUENCE_BITS |
-            unique_id.sequence
+        unique_id.last_timestamp << (NODE_ID_BITS + SEQUENCE_BITS)
+            | (self.0.node_id as u64) << SEQUENCE_BITS
+            | unique_id.sequence
     }
 }
 
