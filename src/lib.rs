@@ -52,7 +52,7 @@ impl UniqueIdGen {
         let current_timestamp = chrono::Utc::now().timestamp_millis() as u64;
         if unique_id.last_timestamp < current_timestamp {
             unique_id.last_timestamp = current_timestamp;
-            unique_id.sequence = 0
+            unique_id.sequence = 0;
         } else {
             unique_id.sequence += 1;
             if unique_id.sequence == MAX_SEQUENCE {
@@ -61,7 +61,7 @@ impl UniqueIdGen {
                     latest_timestamp = chrono::Utc::now().timestamp_millis() as u64;
                 }
                 unique_id.last_timestamp = latest_timestamp;
-                unique_id.sequence = 0
+                unique_id.sequence = 0;
             }
         }
         unique_id.last_timestamp << (NODE_ID_BITS + SEQUENCE_BITS)
