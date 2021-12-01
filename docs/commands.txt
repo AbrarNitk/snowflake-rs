@@ -16,4 +16,4 @@ Docker
 docker run --name rust -it <image name>
 docker build .
 docker run -d -p 8080:8080 id-generator
-docker exec <container> /bin/bash
+docker exec -it <container> /bin/bash
