@@ -7,14 +7,16 @@ use actix_web::{
 extern crate id_generator;
 
 async fn health() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!: ".to_string() + &NODE_ID.borrow().to_string())
+    HttpResponse::Ok().body("Hello world!: ".to_string() + &NODE_ID.read().unwrap().to_string())
 }
 
 lazy_static::lazy_static! {
     static ref ID: std::sync::Mutex<Option<id_generator::UniqueIdGen>> = std::sync::Mutex::new(None);
 }
 
-const NODE_ID: std::cell::RefCell<u16> = std::cell::RefCell::new(0);
+lazy_static::lazy_static! {
+    static ref NODE_ID: std::sync::RwLock<u16> = std::sync::RwLock::new(0);
+}
 
 async fn id() -> impl Responder {
     match ID.lock().unwrap().as_mut() {
@@ -36,7 +38,10 @@ async fn main() -> std::io::Result<()> {
         .parse()
         .map_err(|_e| std::io::ErrorKind::NotFound)?;
 
-    NODE_ID.replace(node_id);
+    {
+        let mut n = NODE_ID.write().unwrap();
+        *n = node_id;
+    }
 
     let port: u16 = std::env::var("PORT")
         .unwrap_or("9001".to_string())
