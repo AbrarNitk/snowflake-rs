@@ -1,9 +1,9 @@
-const UNUSED_BITS: u16 = 1;
-const EPOCH_BITS: u64 = 41;
+// const UNUSED_BITS: u16 = 1;
+// const EPOCH_BITS: u64 = 41;
 const NODE_ID_BITS: u16 = 10;
 const SEQUENCE_BITS: u16 = 12;
 
-const MAX_NODE_ID: u64 = (2_i32.pow(NODE_ID_BITS as u32) - 1) as u64;
+// const MAX_NODE_ID: u64 = (2_i32.pow(NODE_ID_BITS as u32) - 1) as u64;
 const MAX_SEQUENCE: u64 = (2_i32.pow(SEQUENCE_BITS as u32) - 1) as u64;
 
 pub struct UniqueId {

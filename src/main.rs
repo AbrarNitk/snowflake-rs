@@ -1,7 +1,7 @@
 //use actix::prelude::*;
-use actix_redis::RedisActor;
+// use actix_redis::RedisActor;
 use actix_web::{
-    get, middleware, post, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
+    middleware, web, App, HttpResponse, HttpServer, Responder, // get, post, HttpRequest,
 };
 
 extern crate id_generator;
@@ -34,6 +34,11 @@ async fn main() -> std::io::Result<()> {
         .parse()
         .map_err(|_e| std::io::ErrorKind::NotFound)?;
 
+    let port: u16 = std::env::var("PORT")
+        .unwrap()
+        .parse()
+        .map_err(|_e| std::io::ErrorKind::NotFound)?;
+
     let mut builder = ID.lock().expect("error while acquiring lock");
     *builder = Some(id_generator::UniqueIdGen::new(node_id));
     std::mem::drop(builder);
@@ -44,7 +49,7 @@ async fn main() -> std::io::Result<()> {
             .route("/health", web::get().to(health))
             .route("/v1", web::get().to(id))
     })
-    .bind("0.0.0.0:8080")?
+    .bind(("0.0.0.0", port))?
     .run()
     .await
 }
