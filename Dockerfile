@@ -21,4 +21,4 @@ COPY --from=builder /id-generator/target/release/id-generator .
 COPY --from=builder /id-generator/.env .env
 
 CMD ["./id-generator"]
-EXPOSE 8080
+EXPOSE 9001
