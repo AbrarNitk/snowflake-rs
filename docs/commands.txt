@@ -17,3 +17,11 @@ docker run --name rust -it <image name>
 docker build .
 docker run -d -p 8080:8080 id-generator
 docker exec -it <container> /bin/bash
+
+sudo docker build -f Dockerfile -t id_gen .
+
+docker run --rm -it --entrypoint bash <image-name-or-id>
+
+TODO:
+ Need to pass node id env into dockerfile, later it should be fetched from a dedicated service
+ We can remove PORT from env file and can keep it as static

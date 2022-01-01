@@ -16,9 +16,9 @@ COPY ./src /id-generator/src
 #RUN rm id-generator/target/release/deps/id-generator*
 RUN cargo build --release
 
-FROM alpine
+FROM ubuntu:latest
 COPY --from=builder /id-generator/target/release/id-generator .
 COPY --from=builder /id-generator/.env .env
 
-CMD ["./id-generator"]
+ENTRYPOINT ["./id-generator"]
 EXPOSE 9001
