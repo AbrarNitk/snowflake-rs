@@ -1,7 +1,12 @@
 //use actix::prelude::*;
 // use actix_redis::RedisActor;
 use actix_web::{
-    middleware, web, App, HttpResponse, HttpServer, Responder, // get, post, HttpRequest,
+    App,
+    HttpResponse,
+    HttpServer,
+    Responder, // get, post, HttpRequest,
+    middleware,
+    web,
 };
 
 extern crate id_generator;
@@ -30,7 +35,7 @@ async fn id() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "actix_web=trace,actix_redis=trace");
+    // std::env::set_var("RUST_LOG", "actix_web=trace,actix_redis=trace");
     env_logger::init();
     dotenv::dotenv().expect("Failed to load .env file");
     let node_id: u16 = std::env::var("NODE_ID")
